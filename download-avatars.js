@@ -2,6 +2,9 @@
 var request = require('request');
 var token = require('./secrets');
 var fs = require('fs');
+var dotenv = require('dotenv');
+const result = dotenv.config();
+
 //cmd line argument assignments
 var username = process.argv[2];
 var repo = process.argv[3];
@@ -17,7 +20,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
     url: 'https://api.github.com/repos/' + repoOwner + '/' + repoName + '/contributors',
     headers: {
       'User-Agent': 'request',
-      'Authorization': 'token ' + token.GITHUB_TOKEN
+      'Authorization': 'token ' + result.parsed.GITHUB_TOKEN
     }
   };
   request(options, function(err, res, body) {
@@ -36,9 +39,7 @@ function printURL(obj) {
     var filePath = 'avatars/' + obj[id]['login'] + '.jpg';
     var avatarURL = obj[id]['avatar_url'];
     downloadImageByURL(avatarURL, filePath);
-    // console.log(obj[id]["avatar_url"]);
   }
-  // console.log(obj.length);
 }
 
 //invoke main function when executed through node
