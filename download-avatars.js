@@ -35,7 +35,10 @@ function getRepoContributors(repoOwner, repoName, cb) {
 //contributor's login name
 function printURL(obj) {
   for(id in obj) {
-    console.log(obj[id]["avatar_url"]);
+    var filePath = 'avatars/' + obj[id]['login'] + '.jpg';
+    var avatarURL = obj[id]['avatar_url'];
+    downloadImageByURL(avatarURL, filePath);
+    // console.log(obj[id]["avatar_url"]);
   }
   // console.log(obj.length);
 }
