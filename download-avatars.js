@@ -15,7 +15,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
     if(err) {
       throw err;
     }
-    cb(err, res);
+    cb(JSON.parse(body));
   });
   /*
     .on('error', function(err) {
@@ -30,10 +30,22 @@ function getRepoContributors(repoOwner, repoName, cb) {
     });*/
 }
 
-getRepoContributors('jquery', 'jquery', function(err, result) {
-  console.log('Errors:', err);
-  console.log('Result:', result);
-});
+//iterate through contributors array, download avatars
+//and save files to avatars directory according to each
+//contributor's login name
+function printURL(obj) {
+  for(id in obj) {
+    console.log(obj[id]["avatar_url"]);
+  }
+  // console.log(obj.length);
+}
+
+
+getRepoContributors('jquery', 'jquery', printURL);
+// getRepoContributors('jquery', 'jquery', function(err, result) {
+//   console.log('Errors:', err);
+//   console.log('Result:', result);
+// });
 
 
 function downloadImageByURL(url, filePath) {
