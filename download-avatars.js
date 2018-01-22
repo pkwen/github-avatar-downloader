@@ -46,6 +46,8 @@ getRepoContributors(username, repo, printURL);
 
 //write images downloaded from given url to given file paths
 function downloadImageByURL(url, filePath) {
+  //check if dir exists, if not mkdir
+  fs.existsSync('avatars') || fs.mkdirSync('avatars');
   request.get(url)
     .on('error', function(err) {
       throw err;
