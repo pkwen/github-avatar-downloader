@@ -1,9 +1,14 @@
 var request = require('request');
 var token = require('./secrets');
 var fs = require('fs');
-console.log('Welcome to the GitHub Avatar Downloader!');
+var username = process.argv[2];
+var repo = process.argv[3];
 
 function getRepoContributors(repoOwner, repoName, cb) {
+  if(repoOwner === undefined || repoName === undefined) {
+    throw 'You did not enter valid arguments.';
+  }
+  console.log('Welcome to the GitHub Avatar Downloader!');
   var options = {
     url: 'https://api.github.com/repos/' + repoOwner + '/' + repoName + '/contributors',
     headers: {
@@ -44,7 +49,7 @@ function printURL(obj) {
 }
 
 
-getRepoContributors('jquery', 'jquery', printURL);
+getRepoContributors(username, repo, printURL);
 // getRepoContributors('jquery', 'jquery', function(err, result) {
 //   console.log('Errors:', err);
 //   console.log('Result:', result);
