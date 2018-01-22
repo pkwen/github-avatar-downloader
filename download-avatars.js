@@ -1,9 +1,13 @@
+//module imports
 var request = require('request');
 var token = require('./secrets');
 var fs = require('fs');
+//cmd line argument assignments
 var username = process.argv[2];
 var repo = process.argv[3];
 
+//send request to github API and parse JSON using the
+//data as an argument to the provided callback
 function getRepoContributors(repoOwner, repoName, cb) {
   if(repoOwner === undefined || repoName === undefined) {
     throw 'You did not enter valid arguments.';
@@ -22,17 +26,6 @@ function getRepoContributors(repoOwner, repoName, cb) {
     }
     cb(JSON.parse(body));
   });
-  /*
-    .on('error', function(err) {
-      throw error;
-    })
-    .on('response', function(response) {
-      console.log(response);
-    })
-    .on('end', function() {
-      cb();
-      console.log('Task completed.');
-    });*/
 }
 
 //iterate through contributors array, download avatars
@@ -48,14 +41,10 @@ function printURL(obj) {
   // console.log(obj.length);
 }
 
-
+//invoke main function when executed through node
 getRepoContributors(username, repo, printURL);
-// getRepoContributors('jquery', 'jquery', function(err, result) {
-//   console.log('Errors:', err);
-//   console.log('Result:', result);
-// });
 
-
+//write images downloaded from given url to given file paths
 function downloadImageByURL(url, filePath) {
   request.get(url)
     .on('error', function(err) {
@@ -69,5 +58,3 @@ function downloadImageByURL(url, filePath) {
       console.log('Avatar download completed.');
     });
 }
-
-// downloadImageByURL("https://avatars2.githubusercontent.com/u/2741?v=3&s=466", "./kvirani.jpg");
